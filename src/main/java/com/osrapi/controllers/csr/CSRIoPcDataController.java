@@ -26,6 +26,7 @@ import com.osrapi.models.csr.CSRGroupEntity;
 import com.osrapi.models.csr.CSRIoItemDataEntity;
 
 import com.osrapi.repositories.csr.CSRIoPcDataRepository;
+import com.osrapi.utilities.csr.CharacterGenerator;
 
 /**
  * @author drau
@@ -979,6 +980,20 @@ public class CSRIoPcDataController {
             resources.add(getIoPcDataResource(iter.next()));
         }
         iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRIoPcDataEntity}s that share a name.
+     * @param name the io_pc_data' name
+     * @return {@link List}<{@link Resource}<{@link CSRIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "random_hero",
+            method = RequestMethod.GET)
+    public List<Resource<CSRIoPcDataEntity>> getRandomHero() {
+        List<Resource<CSRIoPcDataEntity>> resources =
+                new ArrayList<Resource<CSRIoPcDataEntity>>();
+        resources.add(getIoPcDataResource(
+        		CharacterGenerator.getInstance().getRandomCharacter()));
         return resources;
     }
 }
