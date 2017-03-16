@@ -9,8 +9,10 @@ import org.springframework.hateoas.Resource;
 
 import com.osrapi.controllers.csr.CSRBirthAspectController;
 import com.osrapi.controllers.csr.CSRRaceController;
+import com.osrapi.controllers.csr.CSRSocialClassController;
 import com.osrapi.models.csr.CSRBirthAspectEntity;
 import com.osrapi.models.csr.CSRIoPcDataEntity;
+import com.osrapi.models.csr.CSRSocialClassEntity;
 
 public class CharacterGenerator {
 	private CharacterGenerator() {
@@ -45,6 +47,7 @@ public class CharacterGenerator {
 				break;
 			}
 		}
+		aspects = null;
 		// STEP 4 - Determine Personal Attributes
 		List<Object> attributes = new ArrayList<Object>();
 		attributes.add("AGIL");
@@ -57,21 +60,48 @@ public class CharacterGenerator {
 		attributes.add("DISC");
 		attributes.add("PTY");
 		List<Integer> rolls = new ArrayList<Integer>();
-		for (int i = attributes.size() + 2; i >= 0; i--) {
-			switch (Diceroller.getInstance().rolldX(3)) {
-			case 1:
-			case 2: // Heroic Character 2-22 range
-				rolls.add(Diceroller.getInstance().rolldXPlusY(21, 1));
-				break;
-				default: // Super-heroic character 2-25 range
-					rolls.add(Diceroller.getInstance().rolldXPlusY(24, 1));
-					
+		int sum = 0;
+		do {
+			sum = 0;
+			rolls.clear();
+			for (int i = attributes.size() + 2; i >= 0; i--) {
+				switch (Diceroller.getInstance().rolldXPlusY(19, 1)) {
+				case 1: // Historic Character 2-20 range
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+				case 10:
+				case 11:
+				case 12:
+				case 13:
+				case 14:
+				case 15:
+					rolls.add(Diceroller.getInstance().rolldXPlusY(20, 1));
+					break;
+				case 16: // Heroic Character 2-22 range
+				case 17:
+				case 18:
+				case 19:
+					rolls.add(Diceroller.getInstance().rolldXPlusY(21, 1));
+					break;
+					default: // Super-heroic character 2-25 range
+						rolls.add(Diceroller.getInstance().rolldXPlusY(24, 1));
+						
+				}
 			}
-		}
-		Collections.sort(rolls);
-		while (rolls.size() > attributes.size()) {
-			rolls.remove(0);
-		}
+			Collections.sort(rolls);
+			while (rolls.size() > attributes.size()) {
+				rolls.remove(0);
+			}
+			for (int i = rolls.size() - 1; i >= 0; i--) {
+				sum += rolls.get(i);
+			}
+		} while (sum < 135);
 		if (entity.getAttributes() == null) {
 			entity.setAttributes(new HashMap<String, Integer>());
 		}
@@ -80,6 +110,17 @@ public class CharacterGenerator {
 					Diceroller.getInstance().getRandomObject(attributes);
 			attributes.remove(attribute);
 			entity.getAttributes().put(attribute, rolls.remove(0));
+		}
+		// STEP 5 - PC Backgrounds
+		roll = Diceroller.getInstance().rolldX(100);
+		List<Resource<CSRSocialClassEntity>> socialClasses = 
+				CSRSocialClassController.getInstance().getAll();
+		for (int i = socialClasses.size() - 1; i >= 0; i--) {
+			if (socialClasses.get(i).getContent().getRollMin() <= roll
+					&& socialClasses.get(i).getContent().getRollMax() >= roll) {
+				entity.setSocialClass(socialClasses.get(i).getContent());
+				break;
+			}
 		}
 		return entity;
 	}
