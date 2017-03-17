@@ -73,6 +73,26 @@ public final class CSRFatherVocationEntity {
         id = val;
     }
 
+    /** the isLiveried. */
+    @Column(name = "is_liveried")
+    @JsonProperty("is_liveried")
+    
+    private Boolean                    isLiveried;
+    /**
+     * Gets the isLiveried.
+     * @return {@link Boolean}
+     */
+    public Boolean getIsLiveried() {
+        return isLiveried;
+    }
+    /**
+     * Sets the isLiveried.
+     * @param val the new value
+     */
+    public void setIsLiveried(final Boolean val) {
+        isLiveried = val;
+    }
+
     /** the rollMax. */
     @Column(name = "roll_max")
     @JsonProperty("roll_max")
@@ -133,6 +153,66 @@ public final class CSRFatherVocationEntity {
         numStartingBonusSkills = val;
     }
 
+    /** the numStartingThieverySkills. */
+    @Column(name = "num_starting_thievery_skills")
+    @JsonProperty("num_starting_thievery_skills")
+    
+    private Long                    numStartingThieverySkills;
+    /**
+     * Gets the numStartingThieverySkills.
+     * @return {@link Long}
+     */
+    public Long getNumStartingThieverySkills() {
+        return numStartingThieverySkills;
+    }
+    /**
+     * Sets the numStartingThieverySkills.
+     * @param val the new value
+     */
+    public void setNumStartingThieverySkills(final Long val) {
+        numStartingThieverySkills = val;
+    }
+
+    /** the numStartingOutdoorSkills. */
+    @Column(name = "num_starting_outdoor_skills")
+    @JsonProperty("num_starting_outdoor_skills")
+    
+    private Long                    numStartingOutdoorSkills;
+    /**
+     * Gets the numStartingOutdoorSkills.
+     * @return {@link Long}
+     */
+    public Long getNumStartingOutdoorSkills() {
+        return numStartingOutdoorSkills;
+    }
+    /**
+     * Sets the numStartingOutdoorSkills.
+     * @param val the new value
+     */
+    public void setNumStartingOutdoorSkills(final Long val) {
+        numStartingOutdoorSkills = val;
+    }
+
+    /** the numStartingCombatSkills. */
+    @Column(name = "num_starting_combat_skills")
+    @JsonProperty("num_starting_combat_skills")
+    
+    private Long                    numStartingCombatSkills;
+    /**
+     * Gets the numStartingCombatSkills.
+     * @return {@link Long}
+     */
+    public Long getNumStartingCombatSkills() {
+        return numStartingCombatSkills;
+    }
+    /**
+     * Sets the numStartingCombatSkills.
+     * @param val the new value
+     */
+    public void setNumStartingCombatSkills(final Long val) {
+        numStartingCombatSkills = val;
+    }
+
     /** the numStartingAgriculturalSkills. */
     @Column(name = "num_starting_agricultural_skills")
     @JsonProperty("num_starting_agricultural_skills")
@@ -153,6 +233,26 @@ public final class CSRFatherVocationEntity {
         numStartingAgriculturalSkills = val;
     }
 
+    /** the numStartingAnimalSkills. */
+    @Column(name = "num_starting_animal_skills")
+    @JsonProperty("num_starting_animal_skills")
+    
+    private Long                    numStartingAnimalSkills;
+    /**
+     * Gets the numStartingAnimalSkills.
+     * @return {@link Long}
+     */
+    public Long getNumStartingAnimalSkills() {
+        return numStartingAnimalSkills;
+    }
+    /**
+     * Sets the numStartingAnimalSkills.
+     * @param val the new value
+     */
+    public void setNumStartingAnimalSkills(final Long val) {
+        numStartingAnimalSkills = val;
+    }
+
     /** the socialStatus. */
     @Column(name = "social_status")
     @JsonProperty("social_status")
@@ -171,6 +271,26 @@ public final class CSRFatherVocationEntity {
      */
     public void setSocialStatus(final long val) {
         socialStatus = val;
+    }
+
+    /** the thievesGuildStatus. */
+    @Column(name = "thieves_guild_status")
+    @JsonProperty("thieves_guild_status")
+    @NotNull
+    private long                    thievesGuildStatus;
+    /**
+     * Gets the thievesGuildStatus.
+     * @return {@link long}
+     */
+    public long getThievesGuildStatus() {
+        return thievesGuildStatus;
+    }
+    /**
+     * Sets the thievesGuildStatus.
+     * @param val the new value
+     */
+    public void setThievesGuildStatus(final long val) {
+        thievesGuildStatus = val;
     }
 
     /** the name. */

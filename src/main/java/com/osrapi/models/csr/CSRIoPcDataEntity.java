@@ -73,6 +73,28 @@ public final class CSRIoPcDataEntity {
         id = val;
     }
 
+    /** the fatherVocation. */
+    @ManyToOne(targetEntity = CSRFatherVocationEntity.class, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @JoinColumn(name = "fatherVocation")
+    @JsonProperty("father_vocation")
+  @NotNull
+    private CSRFatherVocationEntity    fatherVocation;
+    /**
+     * Gets the fatherVocation.
+     * @return {@link CSRFatherVocationEntity}
+     */
+    public CSRFatherVocationEntity getFatherVocation() {
+        return fatherVocation;
+    }
+    /**
+     * Sets the fatherVocation.
+     * @param val the new value
+     */
+    public void setFatherVocation(final CSRFatherVocationEntity val) {
+        fatherVocation = val;
+    }
+
     /** the xp. */
     @Column(name = "xp")
     @JsonProperty("xp")

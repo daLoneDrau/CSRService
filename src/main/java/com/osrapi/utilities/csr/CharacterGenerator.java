@@ -8,9 +8,11 @@ import java.util.List;
 import org.springframework.hateoas.Resource;
 
 import com.osrapi.controllers.csr.CSRBirthAspectController;
+import com.osrapi.controllers.csr.CSRFatherVocationController;
 import com.osrapi.controllers.csr.CSRRaceController;
 import com.osrapi.controllers.csr.CSRSocialClassController;
 import com.osrapi.models.csr.CSRBirthAspectEntity;
+import com.osrapi.models.csr.CSRFatherVocationEntity;
 import com.osrapi.models.csr.CSRIoPcDataEntity;
 import com.osrapi.models.csr.CSRSocialClassEntity;
 
@@ -112,16 +114,30 @@ public class CharacterGenerator {
 			entity.getAttributes().put(attribute, rolls.remove(0));
 		}
 		// STEP 5 - PC Backgrounds
-		roll = Diceroller.getInstance().rolldX(100);
-		List<Resource<CSRSocialClassEntity>> socialClasses = 
-				CSRSocialClassController.getInstance().getAll();
-		for (int i = socialClasses.size() - 1; i >= 0; i--) {
-			if (socialClasses.get(i).getContent().getRollMin() <= roll
-					&& socialClasses.get(i).getContent().getRollMax() >= roll) {
-				entity.setSocialClass(socialClasses.get(i).getContent());
-				break;
-			}
-		}
+        // SOCIAL CLASS
+        roll = Diceroller.getInstance().rolldX(100);
+        List<Resource<CSRSocialClassEntity>> socialClasses = 
+                CSRSocialClassController.getInstance().getAll();
+        for (int i = socialClasses.size() - 1; i >= 0; i--) {
+            if (socialClasses.get(i).getContent().getRollMin() <= roll
+                    && socialClasses.get(i).getContent().getRollMax() >= roll) {
+                entity.setSocialClass(socialClasses.get(i).getContent());
+                break;
+            }
+        }
+        // FATHERS VOCATION
+        roll = Diceroller.getInstance().rolldX(100);
+        List<Resource<CSRFatherVocationEntity>> fatherVocations = 
+                CSRFatherVocationController.getInstance().getAll();
+        for (int i = fatherVocations.size() - 1; i >= 0; i--) {
+            if (fatherVocations.get(i).getContent().getSocialClass().getId() == entity.getSocialClass().getId()
+                    && fatherVocations.get(i).getContent().getRollMin() <= roll
+                    && fatherVocations.get(i).getContent().getRollMax() >= roll) {
+                entity.setFatherVocation(fatherVocations.get(i).getContent());
+                break;
+            }
+        }
+        fatherVocations = null;
 		return entity;
 	}
 }
