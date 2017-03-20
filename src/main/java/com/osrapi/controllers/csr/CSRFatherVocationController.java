@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.csr.CSRFatherVocationEntity;
+import com.osrapi.models.csr.CSRFatherVocationEntity;
 import com.osrapi.models.csr.CSRSocialClassEntity;
 import com.osrapi.models.csr.CSRSkillEntity;
 
@@ -278,6 +279,11 @@ public class CSRFatherVocationController {
             }
         }
 
+        if (entity.getOverlord() != null
+        && entity.getOverlord().getId() == null) {
+      setOverlordIdFromRepository(entity);
+        }
+
         if (entity.getSocialClass() != null
         && entity.getSocialClass().getId() == null) {
       setSocialClassIdFromRepository(entity);
@@ -532,6 +538,11 @@ public class CSRFatherVocationController {
             }
         }
 
+        if (entity.getOverlord() != null
+        && entity.getOverlord().getId() == null) {
+      setOverlordIdFromRepository(entity);
+        }
+
         if (entity.getSocialClass() != null
         && entity.getSocialClass().getId() == null) {
       setSocialClassIdFromRepository(entity);
@@ -544,6 +555,68 @@ public class CSRFatherVocationController {
                 savedEntity.getId());
         savedEntity = null;
         return list;
+    }
+
+  private void setOverlordIdFromRepository(
+      final CSRFatherVocationEntity entity) {
+    CSRFatherVocationEntity memberEntity = null;
+    List<Resource<CSRFatherVocationEntity>> list = null;
+    try {
+      Method method = null;
+      Field field = null;
+      try {
+        method = CSRFatherVocationController.class.getDeclaredMethod(
+            "getByName", new Class[] { String.class });
+        field = CSRFatherVocationEntity.class.getDeclaredField("name");
+      } catch (NoSuchMethodException | NoSuchFieldException e) {
+      }
+      if (method != null
+          && field != null) {
+        field.setAccessible(true);
+        if (field.get(entity.getOverlord()) != null) {
+          list = (List<Resource<CSRFatherVocationEntity>>) method
+              .invoke(
+                  CSRFatherVocationController.getInstance(),
+                  (String) field
+                      .get(entity.getOverlord()));
+        }
+      }
+      if (list == null) {
+        try {
+          method = CSRFatherVocationController.class.getDeclaredMethod(
+              "getByCode", new Class[] { String.class });
+          field = CSRFatherVocationEntity.class
+              .getDeclaredField("code");
+        } catch (NoSuchMethodException | NoSuchFieldException e) {
+        }
+        if (method != null
+            && field != null) {
+          field.setAccessible(true);
+          if (field.get(entity.getOverlord()) != null) {
+            list = (List<Resource<CSRFatherVocationEntity>>)
+                method.invoke(CSRFatherVocationController
+                    .getInstance(),(String) field.get(
+                        entity.getOverlord()));
+          }
+        }
+      }
+      method = null;
+      field = null;
+    } catch (SecurityException | IllegalArgumentException
+        | IllegalAccessException
+        | InvocationTargetException e) {
+    }
+    if (list != null
+        && !list.isEmpty()) {
+      memberEntity = list.get(0).getContent();
+    }
+    if (memberEntity == null) {
+      memberEntity = (CSRFatherVocationEntity)
+          ((Resource) CSRFatherVocationController.getInstance().save(
+              entity.getOverlord()).get(0)).getContent();
+    }
+    entity.setOverlord(memberEntity);
+    list = null;
     }
 
   private void setSocialClassIdFromRepository(
@@ -629,6 +702,25 @@ public class CSRFatherVocationController {
         return resources;
     }
     /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a feudalHolding.
+     * @param feudalHolding the father_vocation' feudalHolding
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "feudal_holding/{feudalHolding}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByFeudalHolding(
+            @PathVariable final Long feudalHolding) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByFeudalHolding(feudalHolding)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a list of {@link CSRFatherVocationEntity}s that share a thievesGuildStatus.
      * @param thievesGuildStatus the father_vocation' thievesGuildStatus
      * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
@@ -638,6 +730,25 @@ public class CSRFatherVocationController {
     public List<Resource<CSRFatherVocationEntity>> getByThievesGuildStatus(
             @PathVariable final Long thievesGuildStatus) {
         Iterator<CSRFatherVocationEntity> iter = repository.findByThievesGuildStatus(thievesGuildStatus)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a numBonusD10SocialStatus.
+     * @param numBonusD10SocialStatus the father_vocation' numBonusD10SocialStatus
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "num_bonus_d10_social_status/{numBonusD10SocialStatus}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByNumBonusD10SocialStatus(
+            @PathVariable final Long numBonusD10SocialStatus) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByNumBonusD10SocialStatus(numBonusD10SocialStatus)
                 .iterator();
         List<Resource<CSRFatherVocationEntity>> resources =
                 new ArrayList<Resource<CSRFatherVocationEntity>>();
@@ -705,6 +816,44 @@ public class CSRFatherVocationController {
         return resources;
     }
     /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingArtisticSkills.
+     * @param numStartingArtisticSkills the father_vocation' numStartingArtisticSkills
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "num_starting_artistic_skills/{numStartingArtisticSkills}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByNumStartingArtisticSkills(
+            @PathVariable final Long numStartingArtisticSkills) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByNumStartingArtisticSkills(numStartingArtisticSkills)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingCrafttSkills.
+     * @param numStartingCrafttSkills the father_vocation' numStartingCrafttSkills
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "num_starting_craftt_skills/{numStartingCrafttSkills}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByNumStartingCrafttSkills(
+            @PathVariable final Long numStartingCrafttSkills) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByNumStartingCrafttSkills(numStartingCrafttSkills)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingCombatSkills.
      * @param numStartingCombatSkills the father_vocation' numStartingCombatSkills
      * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
@@ -714,6 +863,25 @@ public class CSRFatherVocationController {
     public List<Resource<CSRFatherVocationEntity>> getByNumStartingCombatSkills(
             @PathVariable final Long numStartingCombatSkills) {
         Iterator<CSRFatherVocationEntity> iter = repository.findByNumStartingCombatSkills(numStartingCombatSkills)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingLoreSkills.
+     * @param numStartingLoreSkills the father_vocation' numStartingLoreSkills
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "num_starting_lore_skills/{numStartingLoreSkills}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByNumStartingLoreSkills(
+            @PathVariable final Long numStartingLoreSkills) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByNumStartingLoreSkills(numStartingLoreSkills)
                 .iterator();
         List<Resource<CSRFatherVocationEntity>> resources =
                 new ArrayList<Resource<CSRFatherVocationEntity>>();
@@ -743,6 +911,25 @@ public class CSRFatherVocationController {
         return resources;
     }
     /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingSeaSkills.
+     * @param numStartingSeaSkills the father_vocation' numStartingSeaSkills
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "num_starting_sea_skills/{numStartingSeaSkills}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByNumStartingSeaSkills(
+            @PathVariable final Long numStartingSeaSkills) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByNumStartingSeaSkills(numStartingSeaSkills)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingThieverySkills.
      * @param numStartingThieverySkills the father_vocation' numStartingThieverySkills
      * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
@@ -762,6 +949,25 @@ public class CSRFatherVocationController {
         return resources;
     }
     /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingTradeSkills.
+     * @param numStartingTradeSkills the father_vocation' numStartingTradeSkills
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "num_starting_trade_skills/{numStartingTradeSkills}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByNumStartingTradeSkills(
+            @PathVariable final Long numStartingTradeSkills) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByNumStartingTradeSkills(numStartingTradeSkills)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingBonusSkills.
      * @param numStartingBonusSkills the father_vocation' numStartingBonusSkills
      * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
@@ -771,6 +977,120 @@ public class CSRFatherVocationController {
     public List<Resource<CSRFatherVocationEntity>> getByNumStartingBonusSkills(
             @PathVariable final Long numStartingBonusSkills) {
         Iterator<CSRFatherVocationEntity> iter = repository.findByNumStartingBonusSkills(numStartingBonusSkills)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingBinary0MagickMethods.
+     * @param numStartingBinary0MagickMethods the father_vocation' numStartingBinary0MagickMethods
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "num_starting_binary0_magick_methods/{numStartingBinary0MagickMethods}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByNumStartingBinary0MagickMethods(
+            @PathVariable final Long numStartingBinary0MagickMethods) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByNumStartingBinary0MagickMethods(numStartingBinary0MagickMethods)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingBinary1MagickMethods.
+     * @param numStartingBinary1MagickMethods the father_vocation' numStartingBinary1MagickMethods
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "num_starting_binary1_magick_methods/{numStartingBinary1MagickMethods}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByNumStartingBinary1MagickMethods(
+            @PathVariable final Long numStartingBinary1MagickMethods) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByNumStartingBinary1MagickMethods(numStartingBinary1MagickMethods)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingBinary1LoreSkills.
+     * @param numStartingBinary1LoreSkills the father_vocation' numStartingBinary1LoreSkills
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "num_starting_binary1_lore_skills/{numStartingBinary1LoreSkills}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByNumStartingBinary1LoreSkills(
+            @PathVariable final Long numStartingBinary1LoreSkills) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByNumStartingBinary1LoreSkills(numStartingBinary1LoreSkills)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingForeignLanguages.
+     * @param numStartingForeignLanguages the father_vocation' numStartingForeignLanguages
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "num_starting_foreign_languages/{numStartingForeignLanguages}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByNumStartingForeignLanguages(
+            @PathVariable final Long numStartingForeignLanguages) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByNumStartingForeignLanguages(numStartingForeignLanguages)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a numStartingWrittenLanguages.
+     * @param numStartingWrittenLanguages the father_vocation' numStartingWrittenLanguages
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "num_starting_written_languages/{numStartingWrittenLanguages}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByNumStartingWrittenLanguages(
+            @PathVariable final Long numStartingWrittenLanguages) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByNumStartingWrittenLanguages(numStartingWrittenLanguages)
+                .iterator();
+        List<Resource<CSRFatherVocationEntity>> resources =
+                new ArrayList<Resource<CSRFatherVocationEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getFatherVocationResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRFatherVocationEntity}s that share a readingIntRequired.
+     * @param readingIntRequired the father_vocation' readingIntRequired
+     * @return {@link List}<{@link Resource}<{@link CSRFatherVocationEntity}>>
+     */
+    @RequestMapping(path = "reading_int_required/{readingIntRequired}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRFatherVocationEntity>> getByReadingIntRequired(
+            @PathVariable final Long readingIntRequired) {
+        Iterator<CSRFatherVocationEntity> iter = repository.findByReadingIntRequired(readingIntRequired)
                 .iterator();
         List<Resource<CSRFatherVocationEntity>> resources =
                 new ArrayList<Resource<CSRFatherVocationEntity>>();

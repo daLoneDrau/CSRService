@@ -22,11 +22,23 @@ extends CrudRepository<CSRFatherVocationEntity, Long> {
 	 */
 	List<CSRFatherVocationEntity> findByName(String name);
 	/**
+	 * Retrieves a list of father vocations by their feudalHolding.
+	 * @param feudalHolding the feudalHolding
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByFeudalHolding(Long feudalHolding);
+	/**
 	 * Retrieves a list of father vocations by their thievesGuildStatus.
 	 * @param thievesGuildStatus the thievesGuildStatus
 	 * @return {@link List}<{@link CSRFatherVocationEntity}>
 	 */
 	List<CSRFatherVocationEntity> findByThievesGuildStatus(Long thievesGuildStatus);
+	/**
+	 * Retrieves a list of father vocations by their numBonusD10SocialStatus.
+	 * @param numBonusD10SocialStatus the numBonusD10SocialStatus
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByNumBonusD10SocialStatus(Long numBonusD10SocialStatus);
 	/**
 	 * Retrieves a list of father vocations by their socialStatus.
 	 * @param socialStatus the socialStatus
@@ -46,11 +58,29 @@ extends CrudRepository<CSRFatherVocationEntity, Long> {
 	 */
 	List<CSRFatherVocationEntity> findByNumStartingAgriculturalSkills(Long numStartingAgriculturalSkills);
 	/**
+	 * Retrieves a list of father vocations by their numStartingArtisticSkills.
+	 * @param numStartingArtisticSkills the numStartingArtisticSkills
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByNumStartingArtisticSkills(Long numStartingArtisticSkills);
+	/**
+	 * Retrieves a list of father vocations by their numStartingCrafttSkills.
+	 * @param numStartingCrafttSkills the numStartingCrafttSkills
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByNumStartingCrafttSkills(Long numStartingCrafttSkills);
+	/**
 	 * Retrieves a list of father vocations by their numStartingCombatSkills.
 	 * @param numStartingCombatSkills the numStartingCombatSkills
 	 * @return {@link List}<{@link CSRFatherVocationEntity}>
 	 */
 	List<CSRFatherVocationEntity> findByNumStartingCombatSkills(Long numStartingCombatSkills);
+	/**
+	 * Retrieves a list of father vocations by their numStartingLoreSkills.
+	 * @param numStartingLoreSkills the numStartingLoreSkills
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByNumStartingLoreSkills(Long numStartingLoreSkills);
 	/**
 	 * Retrieves a list of father vocations by their numStartingOutdoorSkills.
 	 * @param numStartingOutdoorSkills the numStartingOutdoorSkills
@@ -58,17 +88,65 @@ extends CrudRepository<CSRFatherVocationEntity, Long> {
 	 */
 	List<CSRFatherVocationEntity> findByNumStartingOutdoorSkills(Long numStartingOutdoorSkills);
 	/**
+	 * Retrieves a list of father vocations by their numStartingSeaSkills.
+	 * @param numStartingSeaSkills the numStartingSeaSkills
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByNumStartingSeaSkills(Long numStartingSeaSkills);
+	/**
 	 * Retrieves a list of father vocations by their numStartingThieverySkills.
 	 * @param numStartingThieverySkills the numStartingThieverySkills
 	 * @return {@link List}<{@link CSRFatherVocationEntity}>
 	 */
 	List<CSRFatherVocationEntity> findByNumStartingThieverySkills(Long numStartingThieverySkills);
 	/**
+	 * Retrieves a list of father vocations by their numStartingTradeSkills.
+	 * @param numStartingTradeSkills the numStartingTradeSkills
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByNumStartingTradeSkills(Long numStartingTradeSkills);
+	/**
 	 * Retrieves a list of father vocations by their numStartingBonusSkills.
 	 * @param numStartingBonusSkills the numStartingBonusSkills
 	 * @return {@link List}<{@link CSRFatherVocationEntity}>
 	 */
 	List<CSRFatherVocationEntity> findByNumStartingBonusSkills(Long numStartingBonusSkills);
+	/**
+	 * Retrieves a list of father vocations by their numStartingBinary0MagickMethods.
+	 * @param numStartingBinary0MagickMethods the numStartingBinary0MagickMethods
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByNumStartingBinary0MagickMethods(Long numStartingBinary0MagickMethods);
+	/**
+	 * Retrieves a list of father vocations by their numStartingBinary1MagickMethods.
+	 * @param numStartingBinary1MagickMethods the numStartingBinary1MagickMethods
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByNumStartingBinary1MagickMethods(Long numStartingBinary1MagickMethods);
+	/**
+	 * Retrieves a list of father vocations by their numStartingBinary1LoreSkills.
+	 * @param numStartingBinary1LoreSkills the numStartingBinary1LoreSkills
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByNumStartingBinary1LoreSkills(Long numStartingBinary1LoreSkills);
+	/**
+	 * Retrieves a list of father vocations by their numStartingForeignLanguages.
+	 * @param numStartingForeignLanguages the numStartingForeignLanguages
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByNumStartingForeignLanguages(Long numStartingForeignLanguages);
+	/**
+	 * Retrieves a list of father vocations by their numStartingWrittenLanguages.
+	 * @param numStartingWrittenLanguages the numStartingWrittenLanguages
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByNumStartingWrittenLanguages(Long numStartingWrittenLanguages);
+	/**
+	 * Retrieves a list of father vocations by their readingIntRequired.
+	 * @param readingIntRequired the readingIntRequired
+	 * @return {@link List}<{@link CSRFatherVocationEntity}>
+	 */
+	List<CSRFatherVocationEntity> findByReadingIntRequired(Long readingIntRequired);
 	/**
 	 * Retrieves a list of father vocations by their rollMin.
 	 * @param rollMin the rollMin

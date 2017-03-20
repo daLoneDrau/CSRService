@@ -133,6 +133,126 @@ public final class CSRFatherVocationEntity {
         rollMin = val;
     }
 
+    /** the readingIntRequired. */
+    @Column(name = "reading_int_required")
+    @JsonProperty("reading_int_required")
+    
+    private Long                    readingIntRequired;
+    /**
+     * Gets the readingIntRequired.
+     * @return {@link Long}
+     */
+    public Long getReadingIntRequired() {
+        return readingIntRequired;
+    }
+    /**
+     * Sets the readingIntRequired.
+     * @param val the new value
+     */
+    public void setReadingIntRequired(final Long val) {
+        readingIntRequired = val;
+    }
+
+    /** the numStartingWrittenLanguages. */
+    @Column(name = "num_starting_written_languages")
+    @JsonProperty("num_starting_written_languages")
+    
+    private Long                    numStartingWrittenLanguages;
+    /**
+     * Gets the numStartingWrittenLanguages.
+     * @return {@link Long}
+     */
+    public Long getNumStartingWrittenLanguages() {
+        return numStartingWrittenLanguages;
+    }
+    /**
+     * Sets the numStartingWrittenLanguages.
+     * @param val the new value
+     */
+    public void setNumStartingWrittenLanguages(final Long val) {
+        numStartingWrittenLanguages = val;
+    }
+
+    /** the numStartingForeignLanguages. */
+    @Column(name = "num_starting_foreign_languages")
+    @JsonProperty("num_starting_foreign_languages")
+    
+    private Long                    numStartingForeignLanguages;
+    /**
+     * Gets the numStartingForeignLanguages.
+     * @return {@link Long}
+     */
+    public Long getNumStartingForeignLanguages() {
+        return numStartingForeignLanguages;
+    }
+    /**
+     * Sets the numStartingForeignLanguages.
+     * @param val the new value
+     */
+    public void setNumStartingForeignLanguages(final Long val) {
+        numStartingForeignLanguages = val;
+    }
+
+    /** the numStartingBinary1LoreSkills. */
+    @Column(name = "num_starting_binary1_lore_skills")
+    @JsonProperty("num_starting_binary1_lore_skills")
+    
+    private Long                    numStartingBinary1LoreSkills;
+    /**
+     * Gets the numStartingBinary1LoreSkills.
+     * @return {@link Long}
+     */
+    public Long getNumStartingBinary1LoreSkills() {
+        return numStartingBinary1LoreSkills;
+    }
+    /**
+     * Sets the numStartingBinary1LoreSkills.
+     * @param val the new value
+     */
+    public void setNumStartingBinary1LoreSkills(final Long val) {
+        numStartingBinary1LoreSkills = val;
+    }
+
+    /** the numStartingBinary1MagickMethods. */
+    @Column(name = "num_starting_binary1_magick_methods")
+    @JsonProperty("num_starting_binary1_magick_methods")
+    
+    private Long                    numStartingBinary1MagickMethods;
+    /**
+     * Gets the numStartingBinary1MagickMethods.
+     * @return {@link Long}
+     */
+    public Long getNumStartingBinary1MagickMethods() {
+        return numStartingBinary1MagickMethods;
+    }
+    /**
+     * Sets the numStartingBinary1MagickMethods.
+     * @param val the new value
+     */
+    public void setNumStartingBinary1MagickMethods(final Long val) {
+        numStartingBinary1MagickMethods = val;
+    }
+
+    /** the numStartingBinary0MagickMethods. */
+    @Column(name = "num_starting_binary0_magick_methods")
+    @JsonProperty("num_starting_binary0_magick_methods")
+    
+    private Long                    numStartingBinary0MagickMethods;
+    /**
+     * Gets the numStartingBinary0MagickMethods.
+     * @return {@link Long}
+     */
+    public Long getNumStartingBinary0MagickMethods() {
+        return numStartingBinary0MagickMethods;
+    }
+    /**
+     * Sets the numStartingBinary0MagickMethods.
+     * @param val the new value
+     */
+    public void setNumStartingBinary0MagickMethods(final Long val) {
+        numStartingBinary0MagickMethods = val;
+    }
+
     /** the numStartingBonusSkills. */
     @Column(name = "num_starting_bonus_skills")
     @JsonProperty("num_starting_bonus_skills")
@@ -151,6 +271,26 @@ public final class CSRFatherVocationEntity {
      */
     public void setNumStartingBonusSkills(final Long val) {
         numStartingBonusSkills = val;
+    }
+
+    /** the numStartingTradeSkills. */
+    @Column(name = "num_starting_trade_skills")
+    @JsonProperty("num_starting_trade_skills")
+    
+    private Long                    numStartingTradeSkills;
+    /**
+     * Gets the numStartingTradeSkills.
+     * @return {@link Long}
+     */
+    public Long getNumStartingTradeSkills() {
+        return numStartingTradeSkills;
+    }
+    /**
+     * Sets the numStartingTradeSkills.
+     * @param val the new value
+     */
+    public void setNumStartingTradeSkills(final Long val) {
+        numStartingTradeSkills = val;
     }
 
     /** the numStartingThieverySkills. */
@@ -173,6 +313,26 @@ public final class CSRFatherVocationEntity {
         numStartingThieverySkills = val;
     }
 
+    /** the numStartingSeaSkills. */
+    @Column(name = "num_starting_sea_skills")
+    @JsonProperty("num_starting_sea_skills")
+    
+    private Long                    numStartingSeaSkills;
+    /**
+     * Gets the numStartingSeaSkills.
+     * @return {@link Long}
+     */
+    public Long getNumStartingSeaSkills() {
+        return numStartingSeaSkills;
+    }
+    /**
+     * Sets the numStartingSeaSkills.
+     * @param val the new value
+     */
+    public void setNumStartingSeaSkills(final Long val) {
+        numStartingSeaSkills = val;
+    }
+
     /** the numStartingOutdoorSkills. */
     @Column(name = "num_starting_outdoor_skills")
     @JsonProperty("num_starting_outdoor_skills")
@@ -193,6 +353,26 @@ public final class CSRFatherVocationEntity {
         numStartingOutdoorSkills = val;
     }
 
+    /** the numStartingLoreSkills. */
+    @Column(name = "num_starting_lore_skills")
+    @JsonProperty("num_starting_lore_skills")
+    
+    private Long                    numStartingLoreSkills;
+    /**
+     * Gets the numStartingLoreSkills.
+     * @return {@link Long}
+     */
+    public Long getNumStartingLoreSkills() {
+        return numStartingLoreSkills;
+    }
+    /**
+     * Sets the numStartingLoreSkills.
+     * @param val the new value
+     */
+    public void setNumStartingLoreSkills(final Long val) {
+        numStartingLoreSkills = val;
+    }
+
     /** the numStartingCombatSkills. */
     @Column(name = "num_starting_combat_skills")
     @JsonProperty("num_starting_combat_skills")
@@ -211,6 +391,46 @@ public final class CSRFatherVocationEntity {
      */
     public void setNumStartingCombatSkills(final Long val) {
         numStartingCombatSkills = val;
+    }
+
+    /** the numStartingCrafttSkills. */
+    @Column(name = "num_starting_craftt_skills")
+    @JsonProperty("num_starting_craftt_skills")
+    
+    private Long                    numStartingCrafttSkills;
+    /**
+     * Gets the numStartingCrafttSkills.
+     * @return {@link Long}
+     */
+    public Long getNumStartingCrafttSkills() {
+        return numStartingCrafttSkills;
+    }
+    /**
+     * Sets the numStartingCrafttSkills.
+     * @param val the new value
+     */
+    public void setNumStartingCrafttSkills(final Long val) {
+        numStartingCrafttSkills = val;
+    }
+
+    /** the numStartingArtisticSkills. */
+    @Column(name = "num_starting_artistic_skills")
+    @JsonProperty("num_starting_artistic_skills")
+    
+    private Long                    numStartingArtisticSkills;
+    /**
+     * Gets the numStartingArtisticSkills.
+     * @return {@link Long}
+     */
+    public Long getNumStartingArtisticSkills() {
+        return numStartingArtisticSkills;
+    }
+    /**
+     * Sets the numStartingArtisticSkills.
+     * @param val the new value
+     */
+    public void setNumStartingArtisticSkills(final Long val) {
+        numStartingArtisticSkills = val;
     }
 
     /** the numStartingAgriculturalSkills. */
@@ -273,6 +493,26 @@ public final class CSRFatherVocationEntity {
         socialStatus = val;
     }
 
+    /** the numBonusD10SocialStatus. */
+    @Column(name = "num_bonus_d10_social_status")
+    @JsonProperty("num_bonus_d10_social_status")
+    @NotNull
+    private long                    numBonusD10SocialStatus;
+    /**
+     * Gets the numBonusD10SocialStatus.
+     * @return {@link long}
+     */
+    public long getNumBonusD10SocialStatus() {
+        return numBonusD10SocialStatus;
+    }
+    /**
+     * Sets the numBonusD10SocialStatus.
+     * @param val the new value
+     */
+    public void setNumBonusD10SocialStatus(final long val) {
+        numBonusD10SocialStatus = val;
+    }
+
     /** the thievesGuildStatus. */
     @Column(name = "thieves_guild_status")
     @JsonProperty("thieves_guild_status")
@@ -291,6 +531,26 @@ public final class CSRFatherVocationEntity {
      */
     public void setThievesGuildStatus(final long val) {
         thievesGuildStatus = val;
+    }
+
+    /** the feudalHolding. */
+    @Column(name = "feudal_holding")
+    @JsonProperty("feudal_holding")
+    @NotNull
+    private long                    feudalHolding;
+    /**
+     * Gets the feudalHolding.
+     * @return {@link long}
+     */
+    public long getFeudalHolding() {
+        return feudalHolding;
+    }
+    /**
+     * Sets the feudalHolding.
+     * @param val the new value
+     */
+    public void setFeudalHolding(final long val) {
+        feudalHolding = val;
     }
 
     /** the name. */
@@ -333,6 +593,28 @@ public final class CSRFatherVocationEntity {
      */
     public void setSocialClass(final CSRSocialClassEntity val) {
         socialClass = val;
+    }
+
+    /** the overlord. */
+    @ManyToOne(targetEntity = CSRFatherVocationEntity.class, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @JoinColumn(name = "overlord")
+    @JsonProperty("overlord")
+  
+    private CSRFatherVocationEntity    overlord;
+    /**
+     * Gets the overlord.
+     * @return {@link CSRFatherVocationEntity}
+     */
+    public CSRFatherVocationEntity getOverlord() {
+        return overlord;
+    }
+    /**
+     * Sets the overlord.
+     * @param val the new value
+     */
+    public void setOverlord(final CSRFatherVocationEntity val) {
+        overlord = val;
     }
 
     /**

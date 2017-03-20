@@ -32,6 +32,75 @@ public class CharacterGenerator {
         }
         return instance;
     }
+    private CSRFatherVocationEntity getLandedKnightVocation() {
+        List<Resource<CSRFatherVocationEntity>> fatherVocations = 
+                CSRFatherVocationController.getInstance().getAll();
+        CSRFatherVocationEntity entity = null;
+        do {
+	        int roll = Diceroller.getInstance().rolldX(100);
+	        System.out.println("rolled "+roll+" for landed knight vocation");
+	        for (int i = fatherVocations.size() - 1; i >= 0; i--) {
+	        	CSRFatherVocationEntity voc =
+	        			fatherVocations.get(i).getContent();
+	        	if (voc.getSocialClass().getName().indexOf("LANDED") >= 0
+	        			&& voc.getName().indexOf("Knight") >= 0
+	        			&& voc.getRollMin() <= roll
+	        			&& voc.getRollMax() >= roll) {
+	        		entity = voc;
+	        		voc = null;
+	        		break;
+	        	}
+        		voc = null;
+	        }
+        } while (entity == null);
+        fatherVocations = null;
+        return entity;
+    }
+    private CSRFatherVocationEntity getBanneretteVocation() {
+        List<Resource<CSRFatherVocationEntity>> fatherVocations = 
+                CSRFatherVocationController.getInstance().getAll();
+        CSRFatherVocationEntity entity = null;
+        do {
+	        int roll = Diceroller.getInstance().rolldX(100);
+	        System.out.println("rolled "+roll+" for bannerette vocation");
+	        for (int i = fatherVocations.size() - 1; i >= 0; i--) {
+	        	CSRFatherVocationEntity voc =
+	        			fatherVocations.get(i).getContent();
+	        	if (voc.getSocialClass().getName().indexOf("LANDED") >= 0
+	        			&& voc.getName().indexOf("Banner") >= 0
+	        			&& voc.getRollMin() <= roll
+	        			&& voc.getRollMax() >= roll) {
+	        		entity = voc;
+	        		voc = null;
+	        		break;
+	        	}
+        		voc = null;
+	        }
+        } while (entity == null);
+        fatherVocations = null;
+        return entity;
+    }
+    private CSRFatherVocationEntity getFatherVocation(final long socId) {
+        List<Resource<CSRFatherVocationEntity>> fatherVocations = 
+                CSRFatherVocationController.getInstance().getAll();
+        CSRFatherVocationEntity entity = null;
+        int roll = Diceroller.getInstance().rolldX(100);
+        System.out.println("rolled "+roll+" for father vocation");
+        for (int i = fatherVocations.size() - 1; i >= 0; i--) {
+        	CSRFatherVocationEntity voc =
+        			fatherVocations.get(i).getContent();
+        	if (voc.getSocialClass().getId() == socId
+        			&& voc.getRollMin() <= roll
+        			&& voc.getRollMax() >= roll) {
+        		entity = voc;
+        		voc = null;
+        		break;
+        	}
+    		voc = null;
+        }
+        fatherVocations = null;
+        return entity;
+    }
 	public CSRIoPcDataEntity getRandomCharacter() {
 		CSRIoPcDataEntity entity = new CSRIoPcDataEntity();
 		entity.setId((long) 0);
@@ -125,19 +194,27 @@ public class CharacterGenerator {
                 break;
             }
         }
+        System.out.println("rolled "+roll+" for social class");
         // FATHERS VOCATION
-        roll = Diceroller.getInstance().rolldX(100);
-        List<Resource<CSRFatherVocationEntity>> fatherVocations = 
-                CSRFatherVocationController.getInstance().getAll();
-        for (int i = fatherVocations.size() - 1; i >= 0; i--) {
-            if (fatherVocations.get(i).getContent().getSocialClass().getId() == entity.getSocialClass().getId()
-                    && fatherVocations.get(i).getContent().getRollMin() <= roll
-                    && fatherVocations.get(i).getContent().getRollMax() >= roll) {
-                entity.setFatherVocation(fatherVocations.get(i).getContent());
-                break;
-            }
+        if (entity.getSocialClass().getName().indexOf("LANDED") >= 0) {
+        	entity.setFatherVocation(getLandedKnightVocation());
+        } else if (entity.getSocialClass().getName().indexOf("BANNER") >= 0) {
+        	entity.setFatherVocation(getBanneretteVocation());
+        } else {
+        	entity.setFatherVocation(
+        			getFatherVocation(entity.getSocialClass().getId()));
         }
-        fatherVocations = null;
+        if (entity.getFatherVocation().getSocialClass().getName()
+        		.indexOf("LANDLESS") >= 0) {
+        	// assign overlord
+        	CSRFatherVocationEntity voc = entity.getFatherVocation();
+    		if (voc.getName().toLowerCase().indexOf("landed") >= 0) {
+    			voc.setOverlord(getLandedKnightVocation());
+    		} else if (voc.getName().toLowerCase().indexOf("banner") >= 0) {
+    			voc.setOverlord(getBanneretteVocation());
+    		}
+    		voc = null;
+        }
 		return entity;
 	}
 }

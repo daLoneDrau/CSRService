@@ -1066,7 +1066,7 @@ public class CSRIoPcDataController {
         List<Resource<CSRIoPcDataEntity>> resources =
                 new ArrayList<Resource<CSRIoPcDataEntity>>();
         resources.add(getIoPcDataResource(
-                CharacterGenerator.getInstance().getRandomCharacter()));
+        		CharacterGenerator.getInstance().getRandomCharacter()));
         return resources;
     }
 }
