@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.csr.CSRIoPcDataEntity;
 import com.osrapi.models.csr.CSRBirthAspectEntity;
+import com.osrapi.models.csr.CSRSiblingRankEntity;
+import com.osrapi.models.csr.CSRFamilyStatusEntity;
 import com.osrapi.models.csr.CSRGenderEntity;
 import com.osrapi.models.csr.CSRRaceEntity;
 import com.osrapi.models.csr.CSRSocialClassEntity;
@@ -287,6 +289,16 @@ public class CSRIoPcDataController {
         if (entity.getAspect() != null
         && entity.getAspect().getId() == null) {
       setAspectIdFromRepository(entity);
+        }
+
+        if (entity.getRank() != null
+        && entity.getRank().getId() == null) {
+      setRankIdFromRepository(entity);
+        }
+
+        if (entity.getStatus() != null
+        && entity.getStatus().getId() == null) {
+      setStatusIdFromRepository(entity);
         }
 
         if (entity.getGender() != null
@@ -563,6 +575,16 @@ public class CSRIoPcDataController {
       setAspectIdFromRepository(entity);
         }
 
+        if (entity.getRank() != null
+        && entity.getRank().getId() == null) {
+      setRankIdFromRepository(entity);
+        }
+
+        if (entity.getStatus() != null
+        && entity.getStatus().getId() == null) {
+      setStatusIdFromRepository(entity);
+        }
+
         if (entity.getGender() != null
         && entity.getGender().getId() == null) {
       setGenderIdFromRepository(entity);
@@ -651,6 +673,130 @@ public class CSRIoPcDataController {
               entity.getAspect()).get(0)).getContent();
     }
     entity.setAspect(memberEntity);
+    list = null;
+    }
+
+  private void setRankIdFromRepository(
+      final CSRIoPcDataEntity entity) {
+    CSRSiblingRankEntity memberEntity = null;
+    List<Resource<CSRSiblingRankEntity>> list = null;
+    try {
+      Method method = null;
+      Field field = null;
+      try {
+        method = CSRSiblingRankController.class.getDeclaredMethod(
+            "getByName", new Class[] { String.class });
+        field = CSRSiblingRankEntity.class.getDeclaredField("name");
+      } catch (NoSuchMethodException | NoSuchFieldException e) {
+      }
+      if (method != null
+          && field != null) {
+        field.setAccessible(true);
+        if (field.get(entity.getRank()) != null) {
+          list = (List<Resource<CSRSiblingRankEntity>>) method
+              .invoke(
+                  CSRSiblingRankController.getInstance(),
+                  (String) field
+                      .get(entity.getRank()));
+        }
+      }
+      if (list == null) {
+        try {
+          method = CSRSiblingRankController.class.getDeclaredMethod(
+              "getByCode", new Class[] { String.class });
+          field = CSRSiblingRankEntity.class
+              .getDeclaredField("code");
+        } catch (NoSuchMethodException | NoSuchFieldException e) {
+        }
+        if (method != null
+            && field != null) {
+          field.setAccessible(true);
+          if (field.get(entity.getRank()) != null) {
+            list = (List<Resource<CSRSiblingRankEntity>>)
+                method.invoke(CSRSiblingRankController
+                    .getInstance(),(String) field.get(
+                        entity.getRank()));
+          }
+        }
+      }
+      method = null;
+      field = null;
+    } catch (SecurityException | IllegalArgumentException
+        | IllegalAccessException
+        | InvocationTargetException e) {
+    }
+    if (list != null
+        && !list.isEmpty()) {
+      memberEntity = list.get(0).getContent();
+    }
+    if (memberEntity == null) {
+      memberEntity = (CSRSiblingRankEntity)
+          ((Resource) CSRSiblingRankController.getInstance().save(
+              entity.getRank()).get(0)).getContent();
+    }
+    entity.setRank(memberEntity);
+    list = null;
+    }
+
+  private void setStatusIdFromRepository(
+      final CSRIoPcDataEntity entity) {
+    CSRFamilyStatusEntity memberEntity = null;
+    List<Resource<CSRFamilyStatusEntity>> list = null;
+    try {
+      Method method = null;
+      Field field = null;
+      try {
+        method = CSRFamilyStatusController.class.getDeclaredMethod(
+            "getByName", new Class[] { String.class });
+        field = CSRFamilyStatusEntity.class.getDeclaredField("name");
+      } catch (NoSuchMethodException | NoSuchFieldException e) {
+      }
+      if (method != null
+          && field != null) {
+        field.setAccessible(true);
+        if (field.get(entity.getStatus()) != null) {
+          list = (List<Resource<CSRFamilyStatusEntity>>) method
+              .invoke(
+                  CSRFamilyStatusController.getInstance(),
+                  (String) field
+                      .get(entity.getStatus()));
+        }
+      }
+      if (list == null) {
+        try {
+          method = CSRFamilyStatusController.class.getDeclaredMethod(
+              "getByCode", new Class[] { String.class });
+          field = CSRFamilyStatusEntity.class
+              .getDeclaredField("code");
+        } catch (NoSuchMethodException | NoSuchFieldException e) {
+        }
+        if (method != null
+            && field != null) {
+          field.setAccessible(true);
+          if (field.get(entity.getStatus()) != null) {
+            list = (List<Resource<CSRFamilyStatusEntity>>)
+                method.invoke(CSRFamilyStatusController
+                    .getInstance(),(String) field.get(
+                        entity.getStatus()));
+          }
+        }
+      }
+      method = null;
+      field = null;
+    } catch (SecurityException | IllegalArgumentException
+        | IllegalAccessException
+        | InvocationTargetException e) {
+    }
+    if (list != null
+        && !list.isEmpty()) {
+      memberEntity = list.get(0).getContent();
+    }
+    if (memberEntity == null) {
+      memberEntity = (CSRFamilyStatusEntity)
+          ((Resource) CSRFamilyStatusController.getInstance().save(
+              entity.getStatus()).get(0)).getContent();
+    }
+    entity.setStatus(memberEntity);
     list = null;
     }
 
@@ -1066,7 +1212,7 @@ public class CSRIoPcDataController {
         List<Resource<CSRIoPcDataEntity>> resources =
                 new ArrayList<Resource<CSRIoPcDataEntity>>();
         resources.add(getIoPcDataResource(
-        		CharacterGenerator.getInstance().getRandomCharacter()));
+                CharacterGenerator.getInstance().getRandomCharacter()));
         return resources;
     }
 }

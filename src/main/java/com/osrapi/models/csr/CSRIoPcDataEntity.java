@@ -321,6 +321,50 @@ public final class CSRIoPcDataEntity {
         bags = val;
     }
 
+    /** the status. */
+    @ManyToOne(targetEntity = CSRFamilyStatusEntity.class, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @JoinColumn(name = "status")
+    @JsonProperty("family_status")
+  @NotNull
+    private CSRFamilyStatusEntity    status;
+    /**
+     * Gets the status.
+     * @return {@link CSRFamilyStatusEntity}
+     */
+    public CSRFamilyStatusEntity getStatus() {
+        return status;
+    }
+    /**
+     * Sets the status.
+     * @param val the new value
+     */
+    public void setStatus(final CSRFamilyStatusEntity val) {
+        status = val;
+    }
+
+    /** the rank. */
+    @ManyToOne(targetEntity = CSRSiblingRankEntity.class, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @JoinColumn(name = "rank")
+    @JsonProperty("sibling_rank")
+  @NotNull
+    private CSRSiblingRankEntity    rank;
+    /**
+     * Gets the rank.
+     * @return {@link CSRSiblingRankEntity}
+     */
+    public CSRSiblingRankEntity getRank() {
+        return rank;
+    }
+    /**
+     * Sets the rank.
+     * @param val the new value
+     */
+    public void setRank(final CSRSiblingRankEntity val) {
+        rank = val;
+    }
+
     /** the aspect. */
     @ManyToOne(targetEntity = CSRBirthAspectEntity.class, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)

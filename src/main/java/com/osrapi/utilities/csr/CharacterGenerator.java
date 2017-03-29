@@ -8,12 +8,16 @@ import java.util.List;
 import org.springframework.hateoas.Resource;
 
 import com.osrapi.controllers.csr.CSRBirthAspectController;
+import com.osrapi.controllers.csr.CSRFamilyStatusController;
 import com.osrapi.controllers.csr.CSRFatherVocationController;
 import com.osrapi.controllers.csr.CSRRaceController;
+import com.osrapi.controllers.csr.CSRSiblingRankController;
 import com.osrapi.controllers.csr.CSRSocialClassController;
 import com.osrapi.models.csr.CSRBirthAspectEntity;
+import com.osrapi.models.csr.CSRFamilyStatusEntity;
 import com.osrapi.models.csr.CSRFatherVocationEntity;
 import com.osrapi.models.csr.CSRIoPcDataEntity;
+import com.osrapi.models.csr.CSRSiblingRankEntity;
 import com.osrapi.models.csr.CSRSocialClassEntity;
 
 public class CharacterGenerator {
@@ -303,6 +307,30 @@ public class CharacterGenerator {
     		}
     		voc = null;
         }
+        // STEP 6 - Determine Sibling Rank
+        roll = Diceroller.getInstance().rolldX(100);
+        List<Resource<CSRSiblingRankEntity>> ranks = 
+                CSRSiblingRankController.getInstance().getAll();
+        for (int i = ranks.size() - 1; i >= 0; i--) {
+            if (ranks.get(i).getContent().getRollMin() <= roll
+                    && ranks.get(i).getContent().getRollMax() >= roll) {
+                entity.setRank(ranks.get(i).getContent());
+                break;
+            }
+        }
+        System.out.println("rolled "+roll+" for sibling rank");
+        // STEP 6 - Status in One's Family
+        roll = Diceroller.getInstance().rolldX(100);
+        List<Resource<CSRFamilyStatusEntity>> statuses = 
+                CSRFamilyStatusController.getInstance().getAll();
+        for (int i = statuses.size() - 1; i >= 0; i--) {
+            if (statuses.get(i).getContent().getRollMin() <= roll
+                    && statuses.get(i).getContent().getRollMax() >= roll) {
+                entity.setStatus(statuses.get(i).getContent());
+                break;
+            }
+        }
+        System.out.println("rolled "+roll+" for family status");
 		return entity;
 	}
 }
