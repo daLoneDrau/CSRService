@@ -80,6 +80,82 @@ public class CharacterGenerator {
         fatherVocations = null;
         return entity;
     }
+    private CSRFatherVocationEntity getBaronVocation() {
+        List<Resource<CSRFatherVocationEntity>> fatherVocations = 
+                CSRFatherVocationController.getInstance().getAll();
+        CSRFatherVocationEntity entity = null;
+        do {
+	        int roll = Diceroller.getInstance().rolldX(100);
+	        System.out.println("rolled "+roll+" for baron vocation");
+	        for (int i = fatherVocations.size() - 1; i >= 0; i--) {
+	        	CSRFatherVocationEntity voc =
+	        			fatherVocations.get(i).getContent();
+	        	if (voc.getSocialClass().getName().indexOf("BARON") >= 0
+	        			&& voc.getRollMin() <= roll
+	        			&& voc.getRollMax() >= roll) {
+	        		entity = voc;
+	        		voc = null;
+	        		break;
+	        	}
+        		voc = null;
+	        }
+        } while (entity == null);
+        fatherVocations = null;
+        return entity;
+    }
+    private CSRFatherVocationEntity getTitledNobleVocation() {
+        List<Resource<CSRFatherVocationEntity>> fatherVocations = 
+                CSRFatherVocationController.getInstance().getAll();
+        CSRFatherVocationEntity entity = null;
+        do {
+	        int roll = Diceroller.getInstance().rolldX(98);
+	        System.out.println("rolled "+roll+" for titled vocation");
+	        for (int i = fatherVocations.size() - 1; i >= 0; i--) {
+	        	CSRFatherVocationEntity voc =
+	        			fatherVocations.get(i).getContent();
+	        	if (voc.getSocialClass().getName().indexOf("TITLED") >= 0
+	        			&& voc.getRollMin() <= roll
+	        			&& voc.getRollMax() >= roll) {
+	        		entity = voc;
+	        		voc = null;
+	        		break;
+	        	}
+        		voc = null;
+	        }
+        } while (entity == null);
+        fatherVocations = null;
+        return entity;
+    }
+    private CSRFatherVocationEntity getKingVocation() {
+        List<Resource<CSRFatherVocationEntity>> fatherVocations = 
+                CSRFatherVocationController.getInstance().getByName("King(KG)");
+        CSRFatherVocationEntity entity = fatherVocations.get(0).getContent();
+        fatherVocations = null;
+        return entity;
+    }
+    private CSRFatherVocationEntity getRoyalVocation() {
+        List<Resource<CSRFatherVocationEntity>> fatherVocations = 
+                CSRFatherVocationController.getInstance().getAll();
+        CSRFatherVocationEntity entity = null;
+        do {
+	        int roll = Diceroller.getInstance().rolldXPlusY(50, 50);
+	        System.out.println("rolled "+roll+" for royal vocation");
+	        for (int i = fatherVocations.size() - 1; i >= 0; i--) {
+	        	CSRFatherVocationEntity voc =
+	        			fatherVocations.get(i).getContent();
+	        	if (voc.getSocialClass().getName().indexOf("TITLED") >= 0
+	        			&& voc.getRollMin() <= roll
+	        			&& voc.getRollMax() >= roll) {
+	        		entity = voc;
+	        		voc = null;
+	        		break;
+	        	}
+        		voc = null;
+	        }
+        } while (entity == null);
+        fatherVocations = null;
+        return entity;
+    }
     private CSRFatherVocationEntity getFatherVocation(final long socId) {
         List<Resource<CSRFatherVocationEntity>> fatherVocations = 
                 CSRFatherVocationController.getInstance().getAll();
@@ -200,6 +276,10 @@ public class CharacterGenerator {
         	entity.setFatherVocation(getLandedKnightVocation());
         } else if (entity.getSocialClass().getName().indexOf("BANNER") >= 0) {
         	entity.setFatherVocation(getBanneretteVocation());
+        } else if (entity.getSocialClass().getName().indexOf("TITLED") >= 0) {
+        	entity.setFatherVocation(getTitledNobleVocation());
+        } else if (entity.getSocialClass().getName().indexOf("ROYALTY") >= 0) {
+        	entity.setFatherVocation(getRoyalVocation());
         } else {
         	entity.setFatherVocation(
         			getFatherVocation(entity.getSocialClass().getId()));
@@ -212,6 +292,14 @@ public class CharacterGenerator {
     			voc.setOverlord(getLandedKnightVocation());
     		} else if (voc.getName().toLowerCase().indexOf("banner") >= 0) {
     			voc.setOverlord(getBanneretteVocation());
+    		} else if (voc.getName().toLowerCase().indexOf("baron") >= 0) {
+    			voc.setOverlord(getBaronVocation());
+    		} else if (voc.getName().toLowerCase().indexOf("titled") >= 0) {
+    			voc.setOverlord(getTitledNobleVocation());
+    		} else if (voc.getName().toLowerCase().indexOf("royal") >= 0) {
+    			voc.setOverlord(getRoyalVocation());
+    		} else if (voc.getName().toLowerCase().indexOf("king") >= 0) {
+    			voc.setOverlord(getKingVocation());
     		}
     		voc = null;
         }
