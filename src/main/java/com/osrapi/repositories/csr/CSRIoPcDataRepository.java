@@ -16,6 +16,24 @@ import com.osrapi.models.csr.CSRIoPcDataEntity;
 public interface CSRIoPcDataRepository
 extends CrudRepository<CSRIoPcDataEntity, Long> {
 	/**
+	 * Retrieves a list of io pc datas by their build.
+	 * @param build the build
+	 * @return {@link List}<{@link CSRIoPcDataEntity}>
+	 */
+	List<CSRIoPcDataEntity> findByBuild(Long build);
+	/**
+	 * Retrieves a list of io pc datas by their height.
+	 * @param height the height
+	 * @return {@link List}<{@link CSRIoPcDataEntity}>
+	 */
+	List<CSRIoPcDataEntity> findByHeight(Long height);
+	/**
+	 * Retrieves a list of io pc datas by their weight.
+	 * @param weight the weight
+	 * @return {@link List}<{@link CSRIoPcDataEntity}>
+	 */
+	List<CSRIoPcDataEntity> findByWeight(Long weight);
+	/**
 	 * Retrieves a list of io pc datas by their bags.
 	 * @param bags the bags
 	 * @return {@link List}<{@link CSRIoPcDataEntity}>

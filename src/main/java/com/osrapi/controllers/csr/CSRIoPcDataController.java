@@ -1050,6 +1050,63 @@ public class CSRIoPcDataController {
 
 
     /**
+     * Gets a list of {@link CSRIoPcDataEntity}s that share a build.
+     * @param build the io_pc_data' build
+     * @return {@link List}<{@link Resource}<{@link CSRIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "build/{build}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRIoPcDataEntity>> getByBuild(
+            @PathVariable final Long build) {
+        Iterator<CSRIoPcDataEntity> iter = repository.findByBuild(build)
+                .iterator();
+        List<Resource<CSRIoPcDataEntity>> resources =
+                new ArrayList<Resource<CSRIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRIoPcDataEntity}s that share a height.
+     * @param height the io_pc_data' height
+     * @return {@link List}<{@link Resource}<{@link CSRIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "height/{height}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRIoPcDataEntity>> getByHeight(
+            @PathVariable final Long height) {
+        Iterator<CSRIoPcDataEntity> iter = repository.findByHeight(height)
+                .iterator();
+        List<Resource<CSRIoPcDataEntity>> resources =
+                new ArrayList<Resource<CSRIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRIoPcDataEntity}s that share a weight.
+     * @param weight the io_pc_data' weight
+     * @return {@link List}<{@link Resource}<{@link CSRIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "weight/{weight}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRIoPcDataEntity>> getByWeight(
+            @PathVariable final Long weight) {
+        Iterator<CSRIoPcDataEntity> iter = repository.findByWeight(weight)
+                .iterator();
+        List<Resource<CSRIoPcDataEntity>> resources =
+                new ArrayList<Resource<CSRIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a list of {@link CSRIoPcDataEntity}s that share a bags.
      * @param bags the io_pc_data' bags
      * @return {@link List}<{@link Resource}<{@link CSRIoPcDataEntity}>>

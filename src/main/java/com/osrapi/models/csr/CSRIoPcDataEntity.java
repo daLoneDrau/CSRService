@@ -387,6 +387,66 @@ public final class CSRIoPcDataEntity {
         aspect = val;
     }
 
+    /** the weight. */
+    @Column(name = "weight")
+    @JsonProperty("weight")
+    @NotNull
+    private long                    weight;
+    /**
+     * Gets the weight.
+     * @return {@link long}
+     */
+    public long getWeight() {
+        return weight;
+    }
+    /**
+     * Sets the weight.
+     * @param val the new value
+     */
+    public void setWeight(final long val) {
+        weight = val;
+    }
+
+    /** the height. */
+    @Column(name = "height")
+    @JsonProperty("height")
+    @NotNull
+    private long                    height;
+    /**
+     * Gets the height.
+     * @return {@link long}
+     */
+    public long getHeight() {
+        return height;
+    }
+    /**
+     * Sets the height.
+     * @param val the new value
+     */
+    public void setHeight(final long val) {
+        height = val;
+    }
+
+    /** the build. */
+    @Column(name = "build")
+    @JsonProperty("build")
+    @NotNull
+    private long                    build;
+    /**
+     * Gets the build.
+     * @return {@link long}
+     */
+    public long getBuild() {
+        return build;
+    }
+    /**
+     * Sets the build.
+     * @param val the new value
+     */
+    public void setBuild(final long val) {
+        build = val;
+    }
+
     /**
      * the list of keyring associated with this
      * {@link CSRIoPcDataEntity}.
