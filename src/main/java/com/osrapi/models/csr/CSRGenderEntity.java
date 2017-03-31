@@ -73,6 +73,46 @@ public final class CSRGenderEntity {
         id = val;
     }
 
+    /** the genderParent. */
+    @Column(name = "gender_parent")
+    @JsonProperty("gender_parent")
+    @NotNull
+    private String                    genderParent;
+    /**
+     * Gets the genderParent.
+     * @return {@link String}
+     */
+    public String getGenderParent() {
+        return genderParent;
+    }
+    /**
+     * Sets the genderParent.
+     * @param val the new value
+     */
+    public void setGenderParent(final String val) {
+        genderParent = val;
+    }
+
+    /** the genderOffspring. */
+    @Column(name = "gender_offspring")
+    @JsonProperty("gender_offspring")
+    @NotNull
+    private String                    genderOffspring;
+    /**
+     * Gets the genderOffspring.
+     * @return {@link String}
+     */
+    public String getGenderOffspring() {
+        return genderOffspring;
+    }
+    /**
+     * Sets the genderOffspring.
+     * @param val the new value
+     */
+    public void setGenderOffspring(final String val) {
+        genderOffspring = val;
+    }
+
     /** the reflexive. */
     @Column(name = "reflexive")
     @JsonProperty("reflexive")

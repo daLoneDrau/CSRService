@@ -447,6 +447,50 @@ public final class CSRIoPcDataEntity {
         build = val;
     }
 
+    /** the lastName. */
+    @ManyToOne(targetEntity = CSRNameEntity.class, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @JoinColumn(name = "lastName")
+    @JsonProperty("last_name")
+  @NotNull
+    private CSRNameEntity    lastName;
+    /**
+     * Gets the lastName.
+     * @return {@link CSRNameEntity}
+     */
+    public CSRNameEntity getLastName() {
+        return lastName;
+    }
+    /**
+     * Sets the lastName.
+     * @param val the new value
+     */
+    public void setLastName(final CSRNameEntity val) {
+        lastName = val;
+    }
+
+    /** the firstName. */
+    @ManyToOne(targetEntity = CSRNameEntity.class, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @JoinColumn(name = "firstName")
+    @JsonProperty("first_name")
+  @NotNull
+    private CSRNameEntity    firstName;
+    /**
+     * Gets the firstName.
+     * @return {@link CSRNameEntity}
+     */
+    public CSRNameEntity getFirstName() {
+        return firstName;
+    }
+    /**
+     * Sets the firstName.
+     * @param val the new value
+     */
+    public void setFirstName(final CSRNameEntity val) {
+        firstName = val;
+    }
+
     /**
      * the list of keyring associated with this
      * {@link CSRIoPcDataEntity}.

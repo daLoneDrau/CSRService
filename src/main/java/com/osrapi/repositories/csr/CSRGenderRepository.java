@@ -57,4 +57,16 @@ extends CrudRepository<CSRGenderEntity, Long> {
 	 * @return {@link List}<{@link CSRGenderEntity}>
 	 */
 	List<CSRGenderEntity> findByReflexive(String reflexive);
+	/**
+	 * Retrieves a list of genders by their genderOffspring.
+	 * @param genderOffspring the genderOffspring
+	 * @return {@link List}<{@link CSRGenderEntity}>
+	 */
+	List<CSRGenderEntity> findByGenderOffspring(String genderOffspring);
+	/**
+	 * Retrieves a list of genders by their genderParent.
+	 * @param genderParent the genderParent
+	 * @return {@link List}<{@link CSRGenderEntity}>
+	 */
+	List<CSRGenderEntity> findByGenderParent(String genderParent);
 }

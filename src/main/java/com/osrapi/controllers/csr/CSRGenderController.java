@@ -359,4 +359,42 @@ public class CSRGenderController {
         iter = null;
         return resources;
     }
+    /**
+     * Gets a list of {@link CSRGenderEntity}s that share a genderOffspring.
+     * @param genderOffspring the gender' genderOffspring
+     * @return {@link List}<{@link Resource}<{@link CSRGenderEntity}>>
+     */
+    @RequestMapping(path = "gender_offspring/{genderOffspring}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRGenderEntity>> getByGenderOffspring(
+            @PathVariable final String genderOffspring) {
+        Iterator<CSRGenderEntity> iter = repository.findByGenderOffspring(genderOffspring)
+                .iterator();
+        List<Resource<CSRGenderEntity>> resources =
+                new ArrayList<Resource<CSRGenderEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getGenderResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CSRGenderEntity}s that share a genderParent.
+     * @param genderParent the gender' genderParent
+     * @return {@link List}<{@link Resource}<{@link CSRGenderEntity}>>
+     */
+    @RequestMapping(path = "gender_parent/{genderParent}",
+            method = RequestMethod.GET)
+    public List<Resource<CSRGenderEntity>> getByGenderParent(
+            @PathVariable final String genderParent) {
+        Iterator<CSRGenderEntity> iter = repository.findByGenderParent(genderParent)
+                .iterator();
+        List<Resource<CSRGenderEntity>> resources =
+                new ArrayList<Resource<CSRGenderEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getGenderResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
 }

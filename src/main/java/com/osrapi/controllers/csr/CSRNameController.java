@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -275,6 +277,75 @@ public class CSRNameController {
             @PathVariable final String name) {
         Iterator<CSRNameEntity> iter = repository.findByName(name)
                 .iterator();
+        List<Resource<CSRNameEntity>> resources =
+                new ArrayList<Resource<CSRNameEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getNameResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a random male first name.
+     * @param name the name' name
+     * @return {@link List}<{@link Resource}<{@link CSRNameEntity}>>
+     */
+    @RequestMapping(path = "random_male",
+            method = RequestMethod.GET)
+    public List<Resource<CSRNameEntity>> randomMaleFirstName() {
+        Long qty = repository.countByIsLastAndIsFemale(false, false);
+        int idx = (int) (Math.random() * qty);
+        if (idx == qty) {
+            idx = (int) (qty - 1);
+        }
+        Iterator<CSRNameEntity> iter = repository.findByIsLastAndIsFemale(
+                false, false, (Pageable) new PageRequest(idx, 1)).iterator();
+        List<Resource<CSRNameEntity>> resources =
+                new ArrayList<Resource<CSRNameEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getNameResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a random male first name.
+     * @param name the name' name
+     * @return {@link List}<{@link Resource}<{@link CSRNameEntity}>>
+     */
+    @RequestMapping(path = "random_female",
+            method = RequestMethod.GET)
+    public List<Resource<CSRNameEntity>> randomFemaleFirstName() {
+        Long qty = repository.countByIsFemale(true);
+        int idx = (int) (Math.random() * qty);
+        if (idx == qty) {
+            idx = (int) (qty - 1);
+        }
+        Iterator<CSRNameEntity> iter = repository.findByIsFemale(
+                true, (Pageable) new PageRequest(idx, 1)).iterator();
+        List<Resource<CSRNameEntity>> resources =
+                new ArrayList<Resource<CSRNameEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getNameResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a random male first name.
+     * @param name the name' name
+     * @return {@link List}<{@link Resource}<{@link CSRNameEntity}>>
+     */
+    @RequestMapping(path = "random_last",
+            method = RequestMethod.GET)
+    public List<Resource<CSRNameEntity>> randomLastName() {
+        Long qty = repository.countByIsLastAndIsFemale(true, false);
+        int idx = (int) (Math.random() * qty);
+        if (idx == qty) {
+            idx = (int) (qty - 1);
+        }
+        Iterator<CSRNameEntity> iter = repository.findByIsLastAndIsFemale(
+                true, false, (Pageable) new PageRequest(idx, 1)).iterator();
         List<Resource<CSRNameEntity>> resources =
                 new ArrayList<Resource<CSRNameEntity>>();
         while (iter.hasNext()) {

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.csr.CSRIoPcDataEntity;
+import com.osrapi.models.csr.CSRNameEntity;
+import com.osrapi.models.csr.CSRNameEntity;
 import com.osrapi.models.csr.CSRBirthAspectEntity;
 import com.osrapi.models.csr.CSRSiblingRankEntity;
 import com.osrapi.models.csr.CSRFamilyStatusEntity;
@@ -284,6 +286,16 @@ public class CSRIoPcDataController {
                 entity.getInventoryItems().set(i, inventoryItems);
                 list = null;
             }
+        }
+
+        if (entity.getFirstName() != null
+        && entity.getFirstName().getId() == null) {
+      setFirstNameIdFromRepository(entity);
+        }
+
+        if (entity.getLastName() != null
+        && entity.getLastName().getId() == null) {
+      setLastNameIdFromRepository(entity);
         }
 
         if (entity.getAspect() != null
@@ -570,6 +582,16 @@ public class CSRIoPcDataController {
             }
         }
 
+        if (entity.getFirstName() != null
+        && entity.getFirstName().getId() == null) {
+      setFirstNameIdFromRepository(entity);
+        }
+
+        if (entity.getLastName() != null
+        && entity.getLastName().getId() == null) {
+      setLastNameIdFromRepository(entity);
+        }
+
         if (entity.getAspect() != null
         && entity.getAspect().getId() == null) {
       setAspectIdFromRepository(entity);
@@ -612,6 +634,130 @@ public class CSRIoPcDataController {
                 savedEntity.getId());
         savedEntity = null;
         return list;
+    }
+
+  private void setFirstNameIdFromRepository(
+      final CSRIoPcDataEntity entity) {
+    CSRNameEntity memberEntity = null;
+    List<Resource<CSRNameEntity>> list = null;
+    try {
+      Method method = null;
+      Field field = null;
+      try {
+        method = CSRNameController.class.getDeclaredMethod(
+            "getByName", new Class[] { String.class });
+        field = CSRNameEntity.class.getDeclaredField("name");
+      } catch (NoSuchMethodException | NoSuchFieldException e) {
+      }
+      if (method != null
+          && field != null) {
+        field.setAccessible(true);
+        if (field.get(entity.getFirstName()) != null) {
+          list = (List<Resource<CSRNameEntity>>) method
+              .invoke(
+                  CSRNameController.getInstance(),
+                  (String) field
+                      .get(entity.getFirstName()));
+        }
+      }
+      if (list == null) {
+        try {
+          method = CSRNameController.class.getDeclaredMethod(
+              "getByCode", new Class[] { String.class });
+          field = CSRNameEntity.class
+              .getDeclaredField("code");
+        } catch (NoSuchMethodException | NoSuchFieldException e) {
+        }
+        if (method != null
+            && field != null) {
+          field.setAccessible(true);
+          if (field.get(entity.getFirstName()) != null) {
+            list = (List<Resource<CSRNameEntity>>)
+                method.invoke(CSRNameController
+                    .getInstance(),(String) field.get(
+                        entity.getFirstName()));
+          }
+        }
+      }
+      method = null;
+      field = null;
+    } catch (SecurityException | IllegalArgumentException
+        | IllegalAccessException
+        | InvocationTargetException e) {
+    }
+    if (list != null
+        && !list.isEmpty()) {
+      memberEntity = list.get(0).getContent();
+    }
+    if (memberEntity == null) {
+      memberEntity = (CSRNameEntity)
+          ((Resource) CSRNameController.getInstance().save(
+              entity.getFirstName()).get(0)).getContent();
+    }
+    entity.setFirstName(memberEntity);
+    list = null;
+    }
+
+  private void setLastNameIdFromRepository(
+      final CSRIoPcDataEntity entity) {
+    CSRNameEntity memberEntity = null;
+    List<Resource<CSRNameEntity>> list = null;
+    try {
+      Method method = null;
+      Field field = null;
+      try {
+        method = CSRNameController.class.getDeclaredMethod(
+            "getByName", new Class[] { String.class });
+        field = CSRNameEntity.class.getDeclaredField("name");
+      } catch (NoSuchMethodException | NoSuchFieldException e) {
+      }
+      if (method != null
+          && field != null) {
+        field.setAccessible(true);
+        if (field.get(entity.getLastName()) != null) {
+          list = (List<Resource<CSRNameEntity>>) method
+              .invoke(
+                  CSRNameController.getInstance(),
+                  (String) field
+                      .get(entity.getLastName()));
+        }
+      }
+      if (list == null) {
+        try {
+          method = CSRNameController.class.getDeclaredMethod(
+              "getByCode", new Class[] { String.class });
+          field = CSRNameEntity.class
+              .getDeclaredField("code");
+        } catch (NoSuchMethodException | NoSuchFieldException e) {
+        }
+        if (method != null
+            && field != null) {
+          field.setAccessible(true);
+          if (field.get(entity.getLastName()) != null) {
+            list = (List<Resource<CSRNameEntity>>)
+                method.invoke(CSRNameController
+                    .getInstance(),(String) field.get(
+                        entity.getLastName()));
+          }
+        }
+      }
+      method = null;
+      field = null;
+    } catch (SecurityException | IllegalArgumentException
+        | IllegalAccessException
+        | InvocationTargetException e) {
+    }
+    if (list != null
+        && !list.isEmpty()) {
+      memberEntity = list.get(0).getContent();
+    }
+    if (memberEntity == null) {
+      memberEntity = (CSRNameEntity)
+          ((Resource) CSRNameController.getInstance().save(
+              entity.getLastName()).get(0)).getContent();
+    }
+    entity.setLastName(memberEntity);
+    list = null;
     }
 
   private void setAspectIdFromRepository(
