@@ -482,9 +482,9 @@ public class CharacterGenerator {
         int roll = Diceroller.getInstance().rolldX(100);
         List<Resource<CSRFamilyStatusEntity>> statuses =
                 CSRFamilyStatusController.getInstance().getAll();
-        if (entity.getRank().getCode() == "UNACK_BASTARD") {
+        if (entity.getRank().getCode().equalsIgnoreCase("UNACK_BASTARD")) {
             roll = 1;
-        } else if (entity.getRank().getCode() == "1ST_CHILD") {
+        } else if (entity.getRank().getCode().equalsIgnoreCase("1ST_CHILD")) {
             roll += 21;
             if (roll > 100) {
                 roll = 100;
